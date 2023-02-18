@@ -39,6 +39,7 @@ public class TestJohnsonMotor extends SubsystemBase {
 
   public TestJohnsonMotor() {
     SmartDashboard.putString("JohnsonMotor TicksPerRevolution", "44.4 hall pulses per rotation");
+    m_JohnsonMotor.setInverted(true);
 
     // Configures the encoder's distance-per-pulse
     // The robot moves forward 1 foot per encoder rotation
