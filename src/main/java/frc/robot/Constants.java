@@ -60,8 +60,9 @@ public final class Constants {
         public static final double kP = 0.0002;
         public static final double kI = 0.000001;
         public static final double kD = 0.0004;
-        public static final double kSetPoint = 400;
+        public static final double kSetPoint = 30;
         public static final double kMIN_OUTPUT = -6000.0; // Maximum and minium range that PID can run in
         public static final double kMAX_OUTPUT = 6000.0;
+        public static final int kLimitSwitchChannelID = 3;
     }
 }

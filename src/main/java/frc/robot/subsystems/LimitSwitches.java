@@ -16,8 +16,10 @@ public class LimitSwitches extends SubsystemBase {
   /**
    * Creates a new LimitSwitches.
    */
-  private static final DigitalInput m_UpperLimitSwitch =  new DigitalInput(LimitSwitchesConstants.kUpperLimitSwitchChannel); 
-  private static final DigitalInput m_LowerLimitSwitch =  new DigitalInput(LimitSwitchesConstants.kLowerLimitSwitchChannel); 
+  // private static final DigitalInput m_UpperLimitSwitch = new DigitalInput(
+  // LimitSwitchesConstants.kUpperLimitSwitchChannel);
+  private static final DigitalInput m_LowerLimitSwitch = new DigitalInput(
+      LimitSwitchesConstants.kLowerLimitSwitchChannel);
 
   public LimitSwitches() {
 
@@ -26,7 +28,7 @@ public class LimitSwitches extends SubsystemBase {
   @Override
   public void periodic() {
     // This method will be called once per scheduler run
-    SmartDashboard.putBoolean("Upper Limit Switch", m_UpperLimitSwitch.get());
+    // SmartDashboard.putBoolean("Upper Limit Switch", m_UpperLimitSwitch.get());
     SmartDashboard.putBoolean("Lower Limit Switch", m_LowerLimitSwitch.get());
 
   }

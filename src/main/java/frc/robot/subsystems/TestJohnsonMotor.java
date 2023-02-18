@@ -4,20 +4,18 @@
 
 package frc.robot.subsystems;
 
-import frc.robot.Constants;
-import frc.robot.Constants.JohnsonMotorConstants;
-
 import com.revrobotics.CANSparkMax;
-import com.revrobotics.RelativeEncoder;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
-import com.revrobotics.SparkMaxRelativeEncoder;
-
-import edu.wpi.first.wpilibj2.command.SubsystemBase;
-import edu.wpi.first.wpilibj.Encoder;
-import edu.wpi.first.wpilibj.CounterBase.EncodingType;
-import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import edu.wpi.first.math.controller.PIDController;
+import edu.wpi.first.wpilibj.CounterBase.EncodingType;
+import edu.wpi.first.wpilibj.DigitalInput;
+import edu.wpi.first.wpilibj.Encoder;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
+import edu.wpi.first.wpilibj2.command.SubsystemBase;
+import frc.robot.Constants;
+import frc.robot.Constants.JohnsonMotorConstants;
+import frc.robot.Constants.LimitSwitchesConstants;
 
 public class TestJohnsonMotor extends SubsystemBase {
   /** Creates a new TestJohnsonMotor. */
@@ -30,16 +28,17 @@ public class TestJohnsonMotor extends SubsystemBase {
   // This is for the encoder as a stand-alone and not connected to the CANSparkMax
   // class.
   public Encoder m_JohnsonEncoder = new Encoder(JohnsonMotorConstants.kJohnsonMotorPIDChannel1,
-      JohnsonMotorConstants.kJohnsonMotorPIDChannel2, false, EncodingType.k1X);
+      JohnsonMotorConstants.kJohnsonMotorPIDChannel2, true, EncodingType.k1X);
 
-  public PIDController m_PID = new PIDController(Constants.JohnsonMotorConstants.kP, Constants.JohnsonMotorConstants.kI,
-      Constants.JohnsonMotorConstants.kD);
+  public PIDController m_PID = new PIDController(JohnsonMotorConstants.kP, JohnsonMotorConstants.kI,
+      JohnsonMotorConstants.kD);
+
+  public DigitalInput m_limit = new DigitalInput(LimitSwitchesConstants.kUpperLimitSwitchChannel);
 
   // Make sure to tell Matthew that this motor is Brushed and kQuadrature
 
   public TestJohnsonMotor() {
-    // SmartDashboard.putNumber("JohnsonMotor TicksPerRevolution",
-    // m_JohnsonEncoder.getCountsPerRevolution());
+    SmartDashboard.putString("JohnsonMotor TicksPerRevolution", "44.4 hall pulses per rotation");
 
     // Configures the encoder's distance-per-pulse
     // The robot moves forward 1 foot per encoder rotation
@@ -56,7 +55,7 @@ public class TestJohnsonMotor extends SubsystemBase {
 
     // Sets the error tolerance to 5, and the error derivative tolerance to 10 per
     // second
-    m_PID.setTolerance(5, 10);
+    // m_PID.setTolerance(5, 10);
 
     // Returns true if the error is less than 5 units, and the
     // error derivative is less than 10 units
@@ -116,6 +115,20 @@ public class TestJohnsonMotor extends SubsystemBase {
       SmartDashboard.putString("Movement Stopped:", "True");
     }
   }
+
+  public void autonomousPeriodic() {
+    // If limit is false, run the motor backwards at half speed until the limit
+    // switch is pressed
+    // then turn off the motor and reset the encoder
+    // This is for honing (otherwise known as homing)
+    if (!m_limit.get()) {
+      m_JohnsonMotor.set(0.5);
+    } else {
+      m_JohnsonMotor.set(0);
+      zeroPID();
+    }
+
+  }
   // Equation will have to use circumference which is 2nr and then it will need
   // the diameter of the circle
   // Or we could guess and check the encoder values and see which one would be min
@@ -128,11 +141,11 @@ public class TestJohnsonMotor extends SubsystemBase {
     // This method will be called once per scheduler run
 
     // Test purposes:
-    MoveForward();
-
+    // MoveForward();
     // testMethod();
 
     // This is to get the encoder value
     SmartDashboard.putNumber("JohnsonMotor Encoder", m_JohnsonEncoder.getDistance());
+    SmartDashboard.putBoolean("Upper Limit Switch", m_limit.get());
   }
 }
