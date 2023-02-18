@@ -66,10 +66,12 @@ public class RobotContainer {
     // -1), m_TestMotors));
 
     // Left thumbstick controls this motor
-    // m_TestJohnsonMotor.setDefaultCommand(new RunCommand(() ->
-    // m_TestJohnsonMotor.setMotor(m_Gamepad.getRawAxis(0)), m_TestJohnsonMotor));
-    m_TestJohnsonMotor
-        .setDefaultCommand(new RunCommand(() -> m_TestJohnsonMotor.autonomousPeriodic(), m_TestJohnsonMotor));
+    // When pushing the thumbstick left or right, it will run at 100%
+    // velocity/speed. When it is pushed forward and backward, it is not running as
+    // well.
+    m_TestJohnsonMotor.setDefaultCommand(
+        new RunCommand(() -> m_TestJohnsonMotor.setMotor(m_Gamepad.getRawAxis(0)),
+            m_TestJohnsonMotor));
   }
 
   /**
