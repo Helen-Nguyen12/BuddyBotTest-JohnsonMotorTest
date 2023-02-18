@@ -66,10 +66,11 @@ public class RobotContainer {
     // -1), m_TestMotors));
 
     // Left thumbstick controls this motor
-    // m_TestJohnsonMotor.setDefaultCommand(new RunCommand(() ->
-    // m_TestJohnsonMotor.setMotor(m_Gamepad.getRawAxis(0)), m_TestJohnsonMotor));
-    m_TestJohnsonMotor
-        .setDefaultCommand(new RunCommand(() -> m_TestJohnsonMotor.autonomousPeriodic(), m_TestJohnsonMotor));
+    m_TestJohnsonMotor.setDefaultCommand(
+        new RunCommand(() -> m_TestJohnsonMotor.setMotor(m_Gamepad.getRawAxis(0)), m_TestJohnsonMotor));
+    // m_TestJohnsonMotor
+    // .setDefaultCommand(new RunCommand(() ->
+    // m_TestJohnsonMotor.autonomousPeriodic(), m_TestJohnsonMotor));
   }
 
   /**

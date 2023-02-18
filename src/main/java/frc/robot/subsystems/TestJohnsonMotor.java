@@ -33,7 +33,8 @@ public class TestJohnsonMotor extends SubsystemBase {
   public PIDController m_PID = new PIDController(JohnsonMotorConstants.kP, JohnsonMotorConstants.kI,
       JohnsonMotorConstants.kD);
 
-  public DigitalInput m_limit = new DigitalInput(LimitSwitchesConstants.kUpperLimitSwitchChannel);
+  // public DigitalInput m_limit = new
+  // DigitalInput(LimitSwitchesConstants.kUpperLimitSwitchChannel);
 
   // Make sure to tell Matthew that this motor is Brushed and kQuadrature
 
@@ -117,19 +118,19 @@ public class TestJohnsonMotor extends SubsystemBase {
     }
   }
 
-  public void autonomousPeriodic() {
-    // If limit is false, run the motor backwards at half speed until the limit
-    // switch is pressed
-    // then turn off the motor and reset the encoder
-    // This is for honing (otherwise known as homing)
-    if (!m_limit.get()) {
-      m_JohnsonMotor.set(0.5);
-    } else {
-      m_JohnsonMotor.set(0);
-      zeroPID();
-    }
+  // public void autonomousPeriodic() {
+  // // If limit is false, run the motor backwards at half speed until the limit
+  // // switch is pressed
+  // // then turn off the motor and reset the encoder
+  // // This is for honing (otherwise known as homing)
+  // if (!m_limit.get()) {
+  // m_JohnsonMotor.set(0.5);
+  // } else {
+  // m_JohnsonMotor.set(0);
+  // zeroPID();
+  // }
 
-  }
+  // }
   // Equation will have to use circumference which is 2nr and then it will need
   // the diameter of the circle
   // Or we could guess and check the encoder values and see which one would be min
@@ -147,6 +148,6 @@ public class TestJohnsonMotor extends SubsystemBase {
 
     // This is to get the encoder value
     SmartDashboard.putNumber("JohnsonMotor Encoder", m_JohnsonEncoder.getDistance());
-    SmartDashboard.putBoolean("Upper Limit Switch", m_limit.get());
+    // SmartDashboard.putBoolean("Upper Limit Switch", m_limit.get());
   }
 }

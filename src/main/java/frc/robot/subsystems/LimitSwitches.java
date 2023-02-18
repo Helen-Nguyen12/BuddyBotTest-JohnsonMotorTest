@@ -16,8 +16,8 @@ public class LimitSwitches extends SubsystemBase {
   /**
    * Creates a new LimitSwitches.
    */
-  // private static final DigitalInput m_UpperLimitSwitch = new DigitalInput(
-  // LimitSwitchesConstants.kUpperLimitSwitchChannel);
+  private static final DigitalInput m_UpperLimitSwitch = new DigitalInput(
+      LimitSwitchesConstants.kUpperLimitSwitchChannel);
   private static final DigitalInput m_LowerLimitSwitch = new DigitalInput(
       LimitSwitchesConstants.kLowerLimitSwitchChannel);
 
